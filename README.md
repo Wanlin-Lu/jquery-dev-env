@@ -31,4 +31,8 @@
   * core-js
   * @babel/polyfill
 
+### 安装
+> npm install
+
+
 
