@@ -9,7 +9,7 @@ module.exports = (isHmr) => {
           loader: MiniCssExtractPlugin.loader,
           options: {
             publicPath: '../',
-            hmr: isHmr,
+            // hmr: isHmr,
             // reloadAll: isHmr,
           },
         },
@@ -24,8 +24,8 @@ module.exports = (isHmr) => {
           loader: MiniCssExtractPlugin.loader,
           options: {
             publicPath: '../',
-            hmr: isHmr,
-            reloadAll: isHmr,
+            // hmr: isHmr,
+            // reloadAll: isHmr,
           },
         },
         'css-loader',
