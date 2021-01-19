@@ -8,6 +8,9 @@ getStyleRules = require('./config/style-file-loader-config')
 
 module.exports = merge(common, {
   mode: 'development',
+  output: {
+    publicPath: '/',
+  },
   devServer: {
     contentBase: path.join(__dirname, './dist'),
     host: 'localhost',
@@ -28,6 +31,7 @@ module.exports = merge(common, {
     rules: getStyleRules(true)
   },
   plugins: [
+    // new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env.API': JSON.stringify('../'),
     }),
