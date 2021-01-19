@@ -13,7 +13,7 @@ module.exports = {
   }, */
   entry: entry,
   output: {
-    publicPath: '/', // debug: Error: Automatic publicPath is not supported in this browser
+    publicPath: './', // debug: Error: Automatic publicPath is not supported in this browser
     filename: 'js/[name]-[hash].js',
     path: path.resolve(__dirname, './dist'),
   },

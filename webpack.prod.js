@@ -3,19 +3,21 @@ const { merge } = require('webpack-merge')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+getStyleRules = require('./config/style-file-loader-config')
+
 module.exports = merge(common, {
   mode: 'production',
-  devtool: 'source-map',
+  // devtool: 'source-map',
   optimization: {
     // minimize: true, // 如果mode是production类型，minimize的默认值是true，执行默认压缩，
     splitChunks: {
       chunks: 'all',
       minSize: 30000, //表示在压缩前的最小模块大小,默认值是30kb
       minChunks: 1, // 表示被引用次数，默认为1；
-      maxAsyncRequests: 5, //所有异步请求不得超过5个
-      maxInitialRequests: 3, //初始话并行请求不得超过3个
+      maxAsyncRequests: 6, //所有异步请求不得超过5个
+      maxInitialRequests: 4, //初始话并行请求不得超过3个
       automaticNameDelimiter: '~', //名称分隔符
-      name: true, //打包后的名称，默认是chunk的名字通过分隔符（默认是～）分隔
+      name: false, //打包后的名称，默认是chunk的名字通过分隔符（默认是～）分隔 // debug
       /* 设置缓存组用来抽取满足不同规则的chunk */
       cacheGroups: {
         utilCommon: {
