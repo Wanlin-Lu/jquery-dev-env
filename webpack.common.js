@@ -1,6 +1,4 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-// const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const path = require('path')
 const webpack = require('webpack')
 
@@ -8,7 +6,6 @@ const { getEntry, createHtmlWebpackPlugin } = require('./config/html-webpack-con
 
 const entry = getEntry()
 
-// console.log(process.env.NODE_ENV)
 module.exports = {
   /* entry: {
     index: './src/script/index.js',
@@ -16,27 +13,20 @@ module.exports = {
   }, */
   entry: entry,
   output: {
-    filename: 'js/[name].js',
+    filename: 'js/[name]-[hash].js',
     path: path.resolve(__dirname, './dist'),
   },
   module: {
     rules: [
-      /* {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader',
-        }),
-      }, */
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         use: {
           loader: 'file-loader',
           options: {
-            name: '[name].[ext]',
-            outputPath: 'font'
-          }
-        }
+            name: '[name]-[hash].[ext]',
+            outputPath: 'font',
+          },
+        },
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -55,36 +45,8 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /[\\/]node_modules[\\/]/,
         loader: 'babel-loader',
-      },
-      {
-        test: /\.(sa|sc|c)ss$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../',
-              hmr: true,
-              reloadAll: true
-            }
-          },
-          {
-            loader: 'css-loader', // translates CSS into CommonJS modules
-          },
-          {
-            loader: 'postcss-loader', // Run postcss actions
-            options: {
-              plugins: function () {
-                // postcss plugins, can be exported to postcss.config.js
-                return [require('autoprefixer')]
-              },
-            },
-          },
-          {
-            loader: 'sass-loader', // compiles Sass to CSS
-          },
-        ],
       },
       {
         test: /\.html$/,
@@ -92,50 +54,7 @@ module.exports = {
           {
             loader: 'html-loader',
             options: {
-              attributes: {
-                list: [
-                  {
-                    tag: 'img',
-                    attribute: 'src',
-                    type: 'src',
-                  },
-                  {
-                    tag: 'img',
-                    attribute: 'srcset',
-                    type: 'srcset',
-                  },
-                  {
-                    tag: 'img',
-                    attribute: 'data-src',
-                    type: 'src',
-                  },
-                  {
-                    tag: 'img',
-                    attribute: 'data-srcset',
-                    type: 'srcset',
-                  },
-                  {
-                    tag: 'link',
-                    attribute: 'href',
-                    type: 'src',
-                    filter: (tag, attribute, attributes) => {
-                      if (!/stylesheet/i.test(attributes.rel)) {
-                        return false
-                      }
-
-                      if (
-                        attributes.type &&
-                        attributes.type.trim().toLowerCase() !== 'text/css'
-                      ) {
-                        return false
-                      }
-
-                      return true
-                    },
-                  },
-                ],
-              },
-              minimize: true,
+              attributes: true
             },
           },
         ],
@@ -144,13 +63,6 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({
-      filename: 'css/[name].css'
-    }),
-    /* new ExtractTextPlugin({
-      filename: '[name].css',
-      allChunks: true,
-    }), */
     new webpack.ProvidePlugin({
       $: 'jquery',
       _: 'lodash',
