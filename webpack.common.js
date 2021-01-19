@@ -1,5 +1,6 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+// const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const path = require('path')
 const webpack = require('webpack')
 
@@ -7,6 +8,7 @@ const { getEntry, createHtmlWebpackPlugin } = require('./config/html-webpack-con
 
 const entry = getEntry()
 
+// console.log(process.env.NODE_ENV)
 module.exports = {
   /* entry: {
     index: './src/script/index.js',
@@ -14,21 +16,27 @@ module.exports = {
   }, */
   entry: entry,
   output: {
-    filename: '[name].js',
+    filename: 'js/[name].js',
     path: path.resolve(__dirname, './dist'),
   },
   module: {
     rules: [
-      {
+      /* {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: 'css-loader',
         }),
-      },
+      }, */
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: 'file-loader',
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'font'
+          }
+        }
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -37,8 +45,8 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              publicPath: './images/',
-              outputPath: 'images/',
+              // publicPath: './images/',
+              outputPath: 'img/',
             },
           },
         ],
@@ -51,10 +59,15 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        test: /\.s[ac]ss$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
           {
-            loader: 'style-loader', // inject CSS to page
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../',
+              hmr: true,
+              reloadAll: true
+            }
           },
           {
             loader: 'css-loader', // translates CSS into CommonJS modules
@@ -131,16 +144,19 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].css'
+    }),
+    /* new ExtractTextPlugin({
       filename: '[name].css',
       allChunks: true,
-    }),
+    }), */
     new webpack.ProvidePlugin({
       $: 'jquery',
       _: 'lodash',
       echarts: 'echarts',
       Popper: ['popper.js', 'default'],
     }),
-    ...createHtmlWebpackPlugin(entry)
-  ]
+    ...createHtmlWebpackPlugin(entry),
+  ],
 }
