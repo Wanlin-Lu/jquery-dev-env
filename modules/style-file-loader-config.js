@@ -30,9 +30,10 @@ module.exports = (isOn) => {
         {
           loader: 'postcss-loader', // Run postcss actions
           options: {
-            plugins: function () {
-              // postcss plugins, can be exported to postcss.config.js
-              return [require('autoprefixer')]
+            postcssOptions: {
+              plugins: [
+                ["autoprefixer"]
+              ]
             }
           }
         },
