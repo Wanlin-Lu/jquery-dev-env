@@ -1,6 +1,10 @@
 const glob = require('glob')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+/**
+ * @description 动态添加入口
+ * @description 根据/src/script下的js文件名称动态生成入口配置对象
+ */
 function getEntry() {
   const entry = {}
   const list = glob.sync('./src/script/*.js')
@@ -14,6 +18,11 @@ function getEntry() {
   return entry
 }
 
+/**
+ * @description 根据传入的入口文件名称返回HtmlWebpackPlugin所需配置对象
+ * @param {String} | name
+ * @returns {Object}
+ */
 function getHtmlConfig(name) {
   return {
     chunks: [name],
@@ -25,10 +34,15 @@ function getHtmlConfig(name) {
   }
 }
 
-function createHtmlWebpackPlugin(list) {
+/**
+ * @description 根据getEntry返回的入口配置对象分别创建HtmlWebpackPlugin
+ * @param {Object} | entries
+ * @returns {Array}
+ */
+function createHtmlWebpackPlugin(entries) {
   const pluginArr = []
-  for (const key in list) {
-    if (list.hasOwnProperty(key)) {
+  for (const key in entries) {
+    if (entries.hasOwnProperty(key)) {
       const configOptions = getHtmlConfig(key)
       pluginArr.push(new HtmlWebpackPlugin(configOptions))
     }
