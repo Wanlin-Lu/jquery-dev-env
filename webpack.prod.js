@@ -1,13 +1,12 @@
-const common = require('./webpack.common')
-const { merge } = require('webpack-merge')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const WebpackProgressOraPlugin = require('webpack-progress-ora-plugin')
 
-getStyleRules = require('./config/style-file-loader-config')
+/* getStyleRules = require('./config/style-file-loader-config') */
 
 module.exports = merge(common, {
   mode: 'production',
-  // devtool: 'source-map',
+  devtool: 'source-map',
   optimization: {
     // minimize: true, // 如果mode是production类型，minimize的默认值是true，执行默认压缩，
     splitChunks: {
@@ -36,15 +35,19 @@ module.exports = merge(common, {
       },
     },
   },
-  module: {
+  /* module: {
     rules: getStyleRules(false)
-  },
+  }, */
   plugins: [
     new webpack.DefinePlugin({
       'process.env.API': JSON.stringify('./'),
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[name]-[hash].css'
+    }),
+    new WebpackProgressOraPlugin({
+      stderr_check: true,
+      interval: 300
     })
   ],
 })

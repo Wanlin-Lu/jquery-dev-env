@@ -1,35 +1,13 @@
-const common = require('./webpack.common')
-const { merge } = require('webpack-merge')
 const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-getStyleRules = require('./config/style-file-loader-config')
-
-module.exports = merge(common, {
+module.exports = {
   mode: 'development',
   output: {
     publicPath: '/',
   },
-  devServer: {
-    contentBase: path.join(__dirname, './dist'),
-    host: 'localhost',
-    hot: true,
-    https: false,
-    port: 8888,
-    proxy: {
-      '/txapi': {
-        target: 'http://api.tianapi.com',
-        changeOrigin: true,
-      },
-    },
-    overlay: {
-      errors: true, // 编译出现错误时，错误直接贴到页面上
-    },
-  },
-  module: {
-    rules: getStyleRules(true)
-  },
+  devtool: 'inline-source-map',
   plugins: [
     // new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
@@ -39,4 +17,4 @@ module.exports = merge(common, {
       filename: 'css/[name].css'
     })
   ],
-})
+}

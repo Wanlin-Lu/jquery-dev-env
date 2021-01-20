@@ -4,8 +4,8 @@
   "description": "jquery development environment",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --progress --colors --config webpack.prod.js",
-    "start": "webpack-dev-server --progress --colors --open --config webpack.dev.js",
+    "build": "cross-env NODE_ENV=production node build.js",
+    "start": "cross-env NODE_ENV=development node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -31,13 +31,15 @@
     "node-sass": "^5.0.0",
     "postcss-loader": "^4.1.0",
     "sass-loader": "^10.1.1",
+    "single-line-log": "^1.1.2",
     "stylus": "^0.54.8",
     "stylus-loader": "^4.3.3",
     "true-case-path": "^2.2.1",
     "webpack": "^5.15.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.2",
-    "webpack-merge": "^5.7.3"
+    "webpack-merge": "^5.7.3",
+    "webpack-progress-ora-plugin": "^1.5.10"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
