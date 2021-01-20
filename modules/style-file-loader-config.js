@@ -25,7 +25,19 @@ module.exports = (isOn) => {
     },
     {
       test: /\.(sa|sc)ss$/,
-      use: [...baseLoader,'sass-loader']
+      use: [
+        ...baseLoader,
+        {
+          loader: 'postcss-loader', // Run postcss actions
+          options: {
+            plugins: function () {
+              // postcss plugins, can be exported to postcss.config.js
+              return [require('autoprefixer')]
+            }
+          }
+        },
+        'sass-loader'
+      ]
     },
     {
       test: /\.css$/,
