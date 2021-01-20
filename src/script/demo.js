@@ -30,5 +30,6 @@ if (process.env.NODE_ENV === 'development') {
   displayState(data.newslist[0].desc)
 }
 
+/* import引入图片 */
 import bg from '../static/img/bg-1.jpg'
 document.querySelector('#script-import').src = bg

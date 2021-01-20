@@ -1,10 +1,10 @@
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const WebpackProgressOraPlugin = require('webpack-progress-ora-plugin')
+const { WebpackProgressOraPlugin } = require('webpack-progress-ora-plugin')
 
 /* getStyleRules = require('./config/style-file-loader-config') */
 
-module.exports = merge(common, {
+module.exports = {
   mode: 'production',
   devtool: 'source-map',
   optimization: {
@@ -50,4 +50,4 @@ module.exports = merge(common, {
       interval: 300
     })
   ],
-})
+}
