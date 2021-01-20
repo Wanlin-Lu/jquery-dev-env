@@ -3,7 +3,7 @@ const { WebpackProgressOraPlugin } = require('webpack-progress-ora-plugin')
 
 module.exports = {
   mode: 'production',
-  devtool: 'source-map',
+  devtool: 'hidden-source-map', //source-map
   optimization: {
     // minimize: true, // 如果mode是production类型，minimize的默认值是true，执行默认压缩，
     splitChunks: {
@@ -28,17 +28,17 @@ module.exports = {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           priority: -10,
-        }
+        },
       },
     },
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'css/[name]-[hash].css'
+      filename: 'css/[name]-[hash].css',
     }),
     new WebpackProgressOraPlugin({
       stderr_check: true,
-      interval: 300
-    })
+      interval: 300,
+    }),
   ],
 }

@@ -6,11 +6,11 @@ module.exports = {
   output: {
     publicPath: '/',
   },
-  devtool: 'inline-source-map',
+  devtool: 'cheap-module-eval-source-map', //inline-source-map
   plugins: [
     // new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].css'
-    })
+      filename: 'css/[name].css',
+    }),
   ],
 }
