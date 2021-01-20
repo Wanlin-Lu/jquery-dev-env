@@ -2,9 +2,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const path = require('path')
 const webpack = require('webpack')
 
-const { getEntry, createHtmlWebpackPlugin } = require('./config/html-webpack-config')
+const getDefinePlugin = require('../modules/create-define-plugin')
+const { getEntry, createHtmlWebpackPlugin } = require('../modules/html-webpack-config')
 
 const entry = getEntry()
+
+const DefinePlugin = process.env.NODE_ENV === 'production' ? getDefinePlugin(require('./dev.config')) : getDefinePlugin(require('./prod.config'))
 
 module.exports = {
   /* entry: {
@@ -15,7 +18,7 @@ module.exports = {
   output: {
     publicPath: './', // debug: Error: Automatic publicPath is not supported in this browser
     filename: 'js/[name]-[hash].js',
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, '../dist'),
   },
   module: {
     rules: [
@@ -70,6 +73,7 @@ module.exports = {
       echarts: 'echarts',
       Popper: ['popper.js', 'default'],
     }),
+    DefinePlugin,
     ...createHtmlWebpackPlugin(entry),
   ],
 }
