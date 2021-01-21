@@ -41,6 +41,9 @@
   * glob
   * single-line-log
 
+### 附加仿Element样式Select插件
+
+
 ### 安装
 > npm install  
 
