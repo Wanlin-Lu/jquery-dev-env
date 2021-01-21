@@ -1,5 +1,5 @@
-import '../../lib/jquery.nicescroll'
-import '../../style/select.sass'
+import '../../../lib/jquery.nicescroll'
+import './select.sass'
 
 $.fn.extend({
   select: function (data, callback) {
@@ -13,7 +13,7 @@ $.fn.extend({
         _this.get(0).offsetWidth +
         'px"></ul>'
     )
-    const $arrow = $('<div class="ipi-selector-arrow"></div>')
+    const $arrow = $('<div class="selector-arrow"></div>')
 
     let _data = null
     let _callback = callback
