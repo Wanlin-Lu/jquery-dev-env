@@ -70,6 +70,7 @@ module.exports = {
     /* 全局引入jquery、lodash、echarts */
     new webpack.ProvidePlugin({
       $: 'jquery',
+      jQuery: 'jquery',
       _: 'lodash',
       echarts: 'echarts',
       Popper: ['popper.js', 'default'],
